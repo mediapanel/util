@@ -5,7 +5,11 @@ Device ORM to pull the various config sources.
 from functools import partial
 from typing import Callable
 
+from sqlalchemy.orm import Session
+
 from .config import GeneralConfig, LayoutConfig
+
+from .db import Device as device_sql
 
 
 class Device:
@@ -26,6 +30,11 @@ class Device:
         self.v6_path = v6_path
         self._general = None
         self._layout = None
+
+    def sql(self, session: Session) -> device_sql:
+        return session.query(device_sql)\
+                .filter_by(device_id=self.device_id)\
+                .first()
 
     @property
     def general(self) -> GeneralConfig:
