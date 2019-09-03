@@ -8,3 +8,5 @@ from .group import Group
 from .user import User
 
 from .asset import Asset
+
+from .media_convert_queue import MediaConvertQueue
