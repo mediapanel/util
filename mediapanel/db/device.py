@@ -2,7 +2,40 @@
 from sqlalchemy import Column, Integer, Boolean, String, TIMESTAMP
 from sqlalchemy.orm import relationship
 
+from sqlalchemy.types import TypeDecorator
+
 from .base import Base
+
+
+class HumanReadableSize(TypeDecorator):
+    """Converts a Human-Readable size to an Integer count of bytes"""
+
+    impl = String
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            if value // 1024 ** 0 < 1024:
+                return str(value)
+            elif value // 1024 ** 1 < 1024:
+                return str(value) + "K"
+            elif value // 1024 ** 2 < 1024:
+                return str(value) + "M"
+            elif value // 1024 ** 3 < 1024:
+                return str(value) + "G"
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            base_size = value[:-1]
+            size_char = value[-1:]
+            exponent = 0
+            if size_char == "K":
+                exponent = 1
+            elif size_char == "M":
+                exponent = 2
+            elif size_char == "G":
+                exponent = 3
+            return int(float(base_size) * (1024 ** exponent))
+        return 0
 
 
 class Device(Base):  # pylint: disable=too-few-public-methods,missing-docstring
@@ -37,3 +70,6 @@ class Device(Base):  # pylint: disable=too-few-public-methods,missing-docstring
     # figure out the purpose of `logo` and `browser`
 
     assets = relationship("Asset")
+
+    total_disk = Column("bootTotalDiskSize", HumanReadableSize)
+    free_disk = Column("bootFreeDiskAmount", HumanReadableSize)

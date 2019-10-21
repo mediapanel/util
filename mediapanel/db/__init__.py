@@ -6,6 +6,7 @@ from .device import Device
 
 from .group import Group
 from .user import User
+from .client import Client
 
 from .asset import Asset
 
