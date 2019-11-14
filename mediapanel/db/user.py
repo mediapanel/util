@@ -2,7 +2,8 @@
 import enum
 from enum import auto
 
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from sqlalchemy.orm import relationship
 
 from .base import Base
 
@@ -20,7 +21,8 @@ class AlertTypes(enum.IntFlag):
 class User(Base):  # pylint: disable=too-few-public-methods,missing-docstring
     __tablename__ = "users"
     user_id = Column("userID", Integer, primary_key=True)
-    client_id = Column("clientID", Integer)
+    client_id = Column("clientID", Integer, ForeignKey('clients.clientID'))
+    client = relationship("Client")
     type = Column(Enum(UserType), nullable=False)  # options: [client, user]
 
     first_name = Column("firstName", String(45), nullable=False)
