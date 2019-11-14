@@ -18,4 +18,5 @@ class Client(Base):  # pylint: disable=too-few-public-methods,missing-docstring
     timezone = Column(String)
     country = Column(String)
     state = Column(String)
+    uuid = Column(String(36))
     high_support = Column(String)  # Legacy option, use licenses now
