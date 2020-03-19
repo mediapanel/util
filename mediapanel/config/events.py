@@ -65,7 +65,7 @@ class EventsConfig(Config):
     """
 
     __slots__ = ["events", "people"]
-    file_path = "/home/mediapanel/themes/events/eventsConfig.json"
+    file_path = "home/mediapanel/themes/events/eventsConfig.json"
 
     def __init__(self, config, **kwargs):
         super().__init__(**kwargs)

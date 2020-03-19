@@ -15,7 +15,7 @@ class GeneralConfig(Config):
     __slots__ = ["nickname", "logo_interval", "timezone",
                  "address", "city", "state", "zipcode", "country",
                  "filter_content", "weather_alerts", "moderated"]
-    file_path = "/home/mediapanel/themes/generalConfig.json"
+    file_path = "home/mediapanel/themes/generalConfig.json"
 
     def __init__(self, config, **kwargs):
         super().__init__(**kwargs)

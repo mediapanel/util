@@ -52,7 +52,7 @@ class LayoutConfig(Config):
     minizone should be displayed.
     """
     __slots__ = "vertical", "layout", "scroller", "minizone", "zones"
-    file_path = "/home/mediapanel/themes/layout.json"
+    file_path = "home/mediapanel/themes/layout.json"
 
     @staticmethod
     def from_v6_values(data):
