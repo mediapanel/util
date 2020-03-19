@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 
 from .base import Base
+from .relationships import user2device
 
 
 # pylint: disable=too-few-public-methods,missing-docstring
@@ -34,3 +35,6 @@ class User(Base):  # pylint: disable=too-few-public-methods,missing-docstring
     # flags for getting email alerts
     # see: AlertTypes
     get_alert_emails = Column("getAlertEmails", Integer, nullable=False)
+
+    allowed_devices = relationship("Device", secondary=user2device,
+                                   backref="allowed_users")

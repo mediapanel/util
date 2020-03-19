@@ -9,3 +9,10 @@ device2group = Table(
     Column("deviceID", String(45), ForeignKey("devices.deviceID")),
     Column("groupID", Integer, ForeignKey("groups.groupID"))
 )
+
+user2device = Table(
+    "users2devices",
+    Base.metadata,
+    Column("deviceID", String(45), ForeignKey("devices.deviceID")),
+    Column("userID", Integer, ForeignKey("users.userID"))
+)
