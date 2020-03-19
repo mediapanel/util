@@ -37,7 +37,7 @@ class ConfigSection:
 
 class ConfigSectionJSONEncoder(json.JSONEncoder):
     """
-    Encode COnfigSection using the v6 serializable method
+    Encode ConfigSection using the v6 serializable method.
     """
 
     # pylint: disable=method-hidden,arguments-differ
@@ -64,7 +64,7 @@ class Config(ConfigSection):
     def from_v6_file(cls, filename: str):
         """
         Load a mediaPanel v6 JSON file (from the ColdFusion servers) and create
-        a GeneralConfig
+        a GeneralConfig.
         """
         with open(filename) as json_file:
             data = cls.from_v6_values(json.load(json_file))
@@ -78,7 +78,7 @@ class Config(ConfigSection):
     def from_v6_id(cls, client_id: str, device_id: str,
                    base_path: str = "/var/www/html/mediapanel/device_config/"):
         """
-        Load a mediaPanel v6 JSON file when given a client_id and device_id
+        Load a mediaPanel v6 JSON file when given a client_id and device_id.
         """
         path = f"{base_path}/{client_id}/1/{device_id}/{cls.file_path}"
         return cls.from_v6_file(path)
