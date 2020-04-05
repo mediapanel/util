@@ -4,7 +4,6 @@ Applet utility functions and classes
 import json
 from os import makedirs, rename
 from os.path import dirname, exists, join
-from tempfile import NamedTemporaryFile
 
 
 class StorageManager:
@@ -35,22 +34,19 @@ class StorageManager:
                     self.context + ".json")
 
     def save(self, content: dict, client_id: int = None):
-        # this isn't strictly necessary but it makes sense to check it
-        # before the actual temporary file is written, just in case
         client_id = self._assert_client_id(client_id)
+        filename = self._get_filename(client_id)
 
         # create temporary file with new content
-        temp_file = NamedTemporaryFile(mode="w", delete=False)
-        with temp_file:
+        with open(filename + "~", "w") as temp_file:
             json.dump(content, temp_file)
-            temp_filename = temp_file.name
 
         # rename old file
         filename = self._get_filename(client_id)
         if not exists(dirname(filename)):
             # directory doesn't exist, make it
             makedirs(dirname(filename), exist_ok=True)
-        rename(temp_filename, filename)
+        rename(filename + "~", filename)
 
     def load(self, client_id: int = None) -> dict:
         filename = self._get_filename(client_id)
