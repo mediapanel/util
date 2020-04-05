@@ -37,15 +37,16 @@ class StorageManager:
         client_id = self._assert_client_id(client_id)
         filename = self._get_filename(client_id)
 
+        # if directory doesn't exist, make it
+        if not exists(dirname(filename)):
+            makedirs(dirname(filename), exist_ok=True)
+
         # create temporary file with new content
         with open(filename + "~", "w") as temp_file:
             json.dump(content, temp_file)
 
         # rename old file
         filename = self._get_filename(client_id)
-        if not exists(dirname(filename)):
-            # directory doesn't exist, make it
-            makedirs(dirname(filename), exist_ok=True)
         rename(filename + "~", filename)
 
     def load(self, client_id: int = None) -> dict:
