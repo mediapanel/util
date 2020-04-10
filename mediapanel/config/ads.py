@@ -115,7 +115,7 @@ class AdsBaseConfig(Config):
     This should not be instantiated directly. You should instead create an
     AdsConfig(), an AdsVerticalConfig(), or an AdsHorizontalConfig().
     """
-    __slots__ = []
+    __slots__ = ["ads"]
 
     def __init__(self, config, **kwargs):
         super().__init__(**kwargs)
